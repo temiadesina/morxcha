@@ -1,0 +1,18 @@
+{
+  "name": "morx-cha",
+  "version": "0.0.0",
+  "description": "Auto-creation of test suites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "4y0",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
+    "mocha": "3.1.2",
+    "q": "1.4.1",
+    "supertest": "2.0.1"
+  }
+}
