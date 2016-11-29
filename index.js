@@ -47,6 +47,8 @@ function extractParamsFromSpec(spec) {
 	var all_params           = { };
 	var required_params      = { };
 	var required_params_list = [];
+	var not_required_params      = { };
+	var not_required_params_list = [];
 	var special_cases = []
 
 	for(var param in spec)
@@ -59,6 +61,11 @@ function extractParamsFromSpec(spec) {
 			required_params[param] = spec_param.eg;
 			required_params_list.push(param);
 		}
+		else
+		{
+			not_required_params[param] = spec_param.eg;
+			not_required_params_list.push(param);
+		}
 	}
 
 
@@ -66,7 +73,9 @@ function extractParamsFromSpec(spec) {
 	return {
 		all_params:all_params,
 		required_params:required_params,
-		required_params_list:required_params_list
+		required_params_list:required_params_list,
+		not_required_params_list:not_required_params_list,
+		not_required_params:not_required_params
 	};
 }
 
@@ -109,7 +118,8 @@ function describeThis(serviceSpec, serviceMethod, config) {
 	describe(config.TestName, function (){
 
 
-		var reqParams = opData.required_params_list;
+		var reqParams  = opData.required_params_list;
+		var nreqParams = opData.not_required_params_list;
 
 		//Test for required value errors
 		reqParams.forEach( p => {
@@ -126,6 +136,25 @@ function describeThis(serviceSpec, serviceMethod, config) {
 				}
 
 			});
+		});
+
+		//Test for each non-required param
+		nreqParams.forEach( (p) => {
+
+			it("should run successfully for non-required param " + p, function (){
+				var data =  JSON.parse( JSON.stringify(opData.required_params) );
+				data[p] = opData.not_required_params[p];
+				if(config.IsPromiseMethod){ 
+				 return expect(serviceMethod(data)).to.not.be.rejected;
+				}
+				else
+				{
+					expect(errTestDelegate(data)).to.not.throw;
+				}
+
+			});
+
+
 		});
 
 

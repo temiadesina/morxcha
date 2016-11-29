@@ -38,6 +38,7 @@ var sampleSpec = {
 	id:{ required:true, eg:"89", eg_invalid:"ab", eg_alreadyexists:"20"},
 	email:{ required:true, eg:"89@gmail.com"},
 	fullname:{ required:false, eg:"dewala Alao"},
+	pubkey:{ required:false, eg:"SAM-993049-YEU"},
 }
 
 morxcha.describeThis(sampleSpec, serviceMethod, {TestName:"MorxCha FirstTest",IsPromiseMethod:false});
