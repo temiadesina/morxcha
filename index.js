@@ -142,6 +142,9 @@ function describeThis(serviceSpec, serviceMethod, config) {
 		nreqParams.forEach( (p) => {
 
 			it("should run successfully for non-required param " + p, function (){
+				if(config.timeout){
+					this.timeout(config.timeout);
+				}
 				var data =  JSON.parse( JSON.stringify(opData.required_params) );
 				data[p] = opData.not_required_params[p];
 				if(config.IsPromiseMethod){ 
@@ -160,6 +163,9 @@ function describeThis(serviceSpec, serviceMethod, config) {
 
 		//Test for only required params
 		it("should run successfully for required params", function (){
+			if(config.timeout){
+				this.timeout(config.timeout);
+			}
 			var data = opData.required_params;
 			if(config.IsPromiseMethod){ 
 			 return expect(serviceMethod(data)).to.not.be.rejected;
@@ -173,6 +179,9 @@ function describeThis(serviceSpec, serviceMethod, config) {
 
 		//Test for all params
 		it("should run successfully for all params", function (){
+			if(config.timeout){
+				this.timeout(config.timeout);
+			}
 			var data = opData.all_params;
 			if(config.IsPromiseMethod){ 
 			 return expect(serviceMethod(data)).to.not.be.rejected;
