@@ -5,8 +5,11 @@ function serviceMethod(data){
 		throw ("id is required");
 	if(!data.email)
 		throw("email is required");
-	//if(!data.fullname)
-	//	throw("fullname is required");
+	if(!data.fullname)
+		throw("fullname is required");
+	if(!data.pubkey){
+		//throw("pubkey is required");
+	}
 
 
 	return "success";
@@ -22,8 +25,11 @@ function serviceMethodPromise(data){
 		throw ("id is required");
 	if(!data.email)
 		throw("email is required");
-	//if(!data.fullname)
-	//	throw("fullname is required");
+	if(!data.fullname)
+		throw("fullname is required");
+	if(!data.pubkey){
+		//throw("pubkey is required");
+	}
 
 	return data;
 	})
@@ -37,7 +43,7 @@ function serviceMethodPromise(data){
 var sampleSpec = {
 	id:{ required:true, eg:"89", eg_invalid:"ab", eg_alreadyexists:"20"},
 	email:{ required:true, eg:"89@gmail.com"},
-	fullname:{ required:false, eg:"dewala Alao"},
+	fullname:{ required:true, eg:"dewala Alao"},
 	pubkey:{ required:false, eg:"SAM-993049-YEU"},
 }
 

@@ -177,21 +177,25 @@ function describeThis(serviceSpec, serviceMethod, config) {
 
 		});
 
-		//Test for all params
-		it("should run successfully for all params", function (){
-			if(config.timeout){
-				this.timeout(config.timeout);
-			}
-			var data = opData.all_params;
-			if(config.IsPromiseMethod){ 
-			 return expect(serviceMethod(data)).to.not.be.rejected;
-			}
-			else
-			{
-				expect(serviceMethod(data)).to.equal("success");
-			}
+		if(nreqParams.length > 0){
 
-		});
+			//Test for all params (if there are required params)
+			it("should run successfully for all params", function (){
+				if(config.timeout){
+					this.timeout(config.timeout);
+				}
+				var data = opData.all_params;
+				if(config.IsPromiseMethod){ 
+				 return expect(serviceMethod(data)).to.not.be.rejected;
+				}
+				else
+				{
+					expect(serviceMethod(data)).to.equal("success");
+				}
+
+			});
+
+		}
 
 
 	});
