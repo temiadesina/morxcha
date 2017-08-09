@@ -125,7 +125,7 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 		reqParams.forEach( p => {
 
 			var data = JSON.parse( JSON.stringify(opData.all_params) );
-			delete data[p]; console.log(data);
+			delete data[p];
 			it("should throw error " + p +" is required error", function (){
 
 				if(config.IsPromiseMethod){  
