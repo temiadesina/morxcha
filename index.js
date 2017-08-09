@@ -114,10 +114,10 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 
 	//Run validation test
 	var opData = extractParamsFromSpec(serviceSpec);
-
+	config.run_only == config.run_only || "both";
 	describe(config.TestName, function (){
 
-
+		if(~['both', 'morx'].indexOf(config.run_only)){
 		var reqParams  = opData.required_params_list;
 		var nreqParams = opData.not_required_params_list;
 
@@ -195,14 +195,14 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 
 			});
 
-		}
+		}}
 
 
-
+		if(~['both', 'extension'].indexOf(config.run_only)){
 		if(raw_callback){
 			var r_data = extractParamsFromSpec(serviceSpec);
-			raw_callback(it, expect, assert, q, r_data)
-		}
+			raw_callback(it, expect, assert, q, r_data, config.timeout)
+		}}
 
 
 	});

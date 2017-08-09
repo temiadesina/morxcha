@@ -55,7 +55,7 @@ function dr(){
 morxcha.describeThis(
 	sampleSpec, 
 	serviceMethod, 
-	{TestName:"MorxCha FirstTest",IsPromiseMethod:false}, 
+	{TestName:"MorxCha FirstTest",IsPromiseMethod:false, run_only:'extension'}, 
 	function(it, expect, assert, q, data) {
 
 		it("should throw x is not defined", function (){
