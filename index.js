@@ -90,7 +90,7 @@ function extractParamsFromSpec(spec) {
 	serviceUsesCallbacks:true
 }
 )
-function describeThis(serviceSpec, serviceMethod, config) {
+function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 
 	function errTestDelegate(data) {
 
@@ -198,7 +198,18 @@ function describeThis(serviceSpec, serviceMethod, config) {
 		}
 
 
+
+		if(raw_callback){
+			var r_data = extractParamsFromSpec(serviceSpec);
+			raw_callback(it, expect, assert, q, r_data)
+		}
+
+
 	});
+
+
+
+	
 
 
 }
@@ -213,6 +224,13 @@ morxcha.describeThis(service.spec, service.newUser, {TestName:'New User Test'})
 */
 /*
 console.log( extractParamsFromSpec(serviceSpec) );*/
+/*
+morxcha.raw( function(expect, assert, q) {
+		
+
+
+})
+*/
 /*
 will need a way for people to add what assert messages should be
 How do we specify what fail conditions and all should be?
