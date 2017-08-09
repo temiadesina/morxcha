@@ -114,7 +114,7 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 
 	//Run validation test
 	var opData = extractParamsFromSpec(serviceSpec);
-	config.run_only == config.run_only || "both";
+	config.run_only = config.run_only || "both";
 	describe(config.TestName, function (){
 
 		if(~['both', 'morx'].indexOf(config.run_only)){
