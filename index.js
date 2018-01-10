@@ -69,13 +69,14 @@ function extractParamsFromSpec(spec) {
 	}
 
 
-	//console.log(JSON.stringify(special_cases));
+	 
 	return {
 		all_params:all_params,
 		required_params:required_params,
 		required_params_list:required_params_list,
 		not_required_params_list:not_required_params_list,
-		not_required_params:not_required_params
+		not_required_params:not_required_params,
+		special_cases:special_cases
 	};
 }
 
@@ -120,6 +121,7 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 		if(~['both', 'morx'].indexOf(config.run_only)){
 		var reqParams  = opData.required_params_list;
 		var nreqParams = opData.not_required_params_list;
+		var special_cases = opData.special_cases
 
 		//Test for required value errors
 		reqParams.forEach( p => {
@@ -172,7 +174,7 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 			}
 			else
 			{
-				expect(errTestDelegate(data)).to.not.throw;
+				expect(errTestDelegate(data)).to.not.throw();
 			}
 
 		});
@@ -196,6 +198,51 @@ function describeThis(serviceSpec, serviceMethod, config, raw_callback) {
 			});
 
 		}}
+
+
+
+		//Test for each non-required param
+		//var data = JSON.parse( JSON.stringify(opData.all_params) );
+		var special_case_values = [];
+		special_cases.forEach( (special_case) => {
+
+			special_case
+			.values
+			.forEach( (value) => {
+
+				value.param = special_case.param;
+				special_case_values.push(value);
+
+			});
+
+
+		});
+
+
+		special_case_values.forEach( (value) => {
+
+			it("special case: "+ value.param +" "+ value.name +" param "+ value.value, function (){
+				if(config.timeout){
+					this.timeout(config.timeout);
+				}
+
+				var data =  JSON.parse( JSON.stringify(opData.required_params) );
+				data[value.param] =  value.value; 
+
+				if(config.IsPromiseMethod){ 
+					//for now special egs will work with rejection until logic to decide further action is implemented. Same for throw below
+				 	return expect(serviceMethod(data)).to.be.rejected;
+				}
+				else
+				{
+					expect(errTestDelegate(data)).to.throw();
+				}
+
+			});
+
+		});
+
+
 
 
 		if(~['both', 'extension'].indexOf(config.run_only)){

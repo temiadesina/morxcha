@@ -2,7 +2,7 @@ var morxcha = require('../index');
 var q = require('q');
 function serviceMethod(data){
 	if(!data.id)
-		throw ("id is required");
+		throw new Error("id is required");
 	if(!data.email)
 		throw("email is required");
 	if(!data.fullname)
@@ -10,6 +10,21 @@ function serviceMethod(data){
 	if(!data.pubkey){
 		//throw("pubkey is required");
 	}
+
+	if(data.email == "944"){
+		throw new Error('invalid email');
+	}
+
+	if(data.id == "ab"){
+		throw new Error('invalid id');
+	}
+
+
+	if(data.id == 20){
+		throw new Error('invalid id');
+	}
+
+	//console.log(data.id);
 
 
 	return "success";
@@ -31,6 +46,19 @@ function serviceMethodPromise(data){
 		//throw("pubkey is required");
 	}
 
+	if(data.email == "944"){
+		throw new Error('invalid email');
+	}
+
+	if(data.id == "ab"){
+		throw new Error('invalid id');
+	}
+
+
+	if(data.id == 20){
+		throw new Error('invalid id');
+	}
+
 	return data;
 	})
 	.then( reda => { d.resolve(reda); })
@@ -42,7 +70,7 @@ function serviceMethodPromise(data){
 
 var sampleSpec = {
 	id:{ required:true, eg:"89", eg_invalid:"ab", eg_alreadyexists:"20"},
-	email:{ required:true, eg:"89@gmail.com"},
+	email:{ required:true, eg:"89@gmail.com", validators:"isEmail", eg_invalidemail:"944"},
 	fullname:{ required:true, eg:"dewala Alao"},
 	pubkey:{ required:false, eg:"SAM-993049-YEU"},
 }
